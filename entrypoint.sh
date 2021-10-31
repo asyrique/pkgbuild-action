@@ -51,6 +51,7 @@ fi
 
 # Set GPG to auto retrieve keys
 mkdir ~/.gnupg -p
+echo "keyserver hkps://keys.openpgp.org" >> ~/.gnupg/gpg.conf
 echo "keyserver-options auto-key-retrieve" >> ~/.gnupg/gpg.conf
 
 # Build packages
