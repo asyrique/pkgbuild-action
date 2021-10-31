@@ -51,10 +51,17 @@ fi
 
 # Set GPG to auto retrieve keys
 mkdir ~/.gnupg -p
+gpg --batch --gen-key <<EOF
+Key-Type: 1
+Key-Length: 2048
+Subkey-Type: 1
+Subkey-Length: 2048
+Name-Real: Root Superuser
+Name-Email: root@ash.me
+Expire-Date: 0
+EOF
 echo "keyserver hkps://keys.openpgp.org" >> ~/.gnupg/gpg.conf
 echo "keyserver-options auto-key-retrieve" >> ~/.gnupg/gpg.conf
-echo "gpg.conf contents"
-cat ~/.gnupg/gpg.conf
 
 # Build packages
 # INPUT_MAKEPKGARGS is intentionally unquoted to allow arg splitting
