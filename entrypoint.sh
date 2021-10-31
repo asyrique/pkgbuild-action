@@ -51,7 +51,7 @@ fi
 
 # Set GPG to auto retrieve keys
 mkdir ~/.gnupg -p
-echo "auto-key-retrieve" >> ~/.gnupg/gpg.conf
+echo "keyserver-options auto-key-retrieve" >> ~/.gnupg/gpg.conf
 
 # Build packages
 # INPUT_MAKEPKGARGS is intentionally unquoted to allow arg splitting
