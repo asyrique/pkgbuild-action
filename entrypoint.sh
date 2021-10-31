@@ -53,17 +53,22 @@ fi
 mkdir -m 0700 ~/.gnupg -p
 touch ~/.gnupg/gpg.conf
 chmod 600 ~/.gnupg/gpg.conf
-gpg --batch --generate-key <<EOF
-Key-Type: 1
-Key-Length: 2048
-Subkey-Type: 1
-Subkey-Length: 2048
-Name-Real: Root Superuser
-Name-Email: root@ash.me
-Expire-Date: 0
-EOF
 echo "keyserver hkps://keys.openpgp.org" >> ~/.gnupg/gpg.conf
 echo "keyserver-options auto-key-retrieve" >> ~/.gnupg/gpg.conf
+gpg --batch --generate-key <<EOF
+	%echo Generating a default key
+	%no-protection
+	%transient-key
+	Key-Type: default
+	Subkey-Type: default
+	Name-Real: Joe Tester
+	Name-Comment: with stupid passphrase
+	Name-Email: joe@foo.bar
+	Expire-Date: 0
+	# Do a commit here, so that we can later print "done" :-)
+	%commit
+	%echo done
+EOF
 
 # Build packages
 # INPUT_MAKEPKGARGS is intentionally unquoted to allow arg splitting
