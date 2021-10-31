@@ -53,7 +53,7 @@ fi
 mkdir -m 0700 ~/.gnupg -p
 touch ~/.gnupg/gpg.conf
 chmod 600 ~/.gnupg/gpg.conf
-gpg --batch --gen-key <<EOF
+gpg --batch -generate-key <<EOF
 Key-Type: 1
 Key-Length: 2048
 Subkey-Type: 1
