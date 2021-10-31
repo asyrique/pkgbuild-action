@@ -53,6 +53,8 @@ fi
 mkdir ~/.gnupg -p
 echo "keyserver hkps://keys.openpgp.org" >> ~/.gnupg/gpg.conf
 echo "keyserver-options auto-key-retrieve" >> ~/.gnupg/gpg.conf
+echo "gpg.conf contents"
+cat ~/.gnupg/gpg.conf
 
 # Build packages
 # INPUT_MAKEPKGARGS is intentionally unquoted to allow arg splitting
