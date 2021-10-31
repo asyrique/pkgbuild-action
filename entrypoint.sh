@@ -49,6 +49,10 @@ if [ -n "${INPUT_AURDEPS:-}" ]; then
 	sudo -H -u builder yay --sync --noconfirm "${PKGDEPS[@]}"
 fi
 
+# Set GPG to auto retrieve keys
+mkdir ~/.gnupg -p
+echo "auto-key-retrieve" >> ~/.gnupg/gpg.conf
+
 # Build packages
 # INPUT_MAKEPKGARGS is intentionally unquoted to allow arg splitting
 # shellcheck disable=SC2086
