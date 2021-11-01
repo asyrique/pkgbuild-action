@@ -9,7 +9,7 @@ cat << EOM >> /etc/pacman.conf
 Include = /etc/pacman.d/mirrorlist
 EOM
 
-pacman -Syu --noconfirm --needed base-devel
+pacman -Syu --noconfirm --needed base-devel pacutils
 
 # Makepkg does not allow running as root
 # Create a new user `builder`
@@ -69,6 +69,12 @@ gpg --batch --generate-key <<EOF
 	%commit
 	%echo done
 EOF
+
+makepkg --printsrcinfo > .SRCINFO
+pacini .SRCINFO validpgpkeys | while read -r key; do
+  gpg --keyserver "hkps://keys.openpgp.org" --recv-keys "$key"
+done
+rm .SRCINFO
 
 # Build packages
 # INPUT_MAKEPKGARGS is intentionally unquoted to allow arg splitting
