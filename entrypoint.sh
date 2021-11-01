@@ -50,12 +50,12 @@ if [ -n "${INPUT_AURDEPS:-}" ]; then
 fi
 
 # Set GPG to auto retrieve keys
-mkdir -m 0700 ~/.gnupg -p
-touch ~/.gnupg/gpg.conf
-chmod 600 ~/.gnupg/gpg.conf
-echo "keyserver hkps://keys.openpgp.org" >> ~/.gnupg/gpg.conf
-echo "keyserver-options auto-key-retrieve" >> ~/.gnupg/gpg.conf
-gpg --batch --generate-key <<EOF
+sudo -H -u builder mkdir -m 0700 ~/.gnupg -p
+sudo -H -u builder touch ~/.gnupg/gpg.conf
+sudo -H -u builder chmod 600 ~/.gnupg/gpg.conf
+echo "keyserver hkps://keys.openpgp.org" | sudo -H -u builder tee ~/.gnupg/gpg.conf
+echo "keyserver-options auto-key-retrieve" | sudo -H -u builder tee -a ~/.gnupg/gpg.conf
+sudo -H -u builder gpg --batch --generate-key <<EOF
 	%echo Generating a default key
 	%no-protection
 	%transient-key
@@ -70,11 +70,11 @@ gpg --batch --generate-key <<EOF
 	%echo done
 EOF
 
-makepkg --printsrcinfo > .SRCINFO
-pacini .SRCINFO validpgpkeys | while read -r key; do
-  gpg --keyserver "hkps://keys.openpgp.org" --recv-keys "$key"
-done
-rm .SRCINFO
+# sudo -H -u builder makepkg --printsrcinfo > .SRCINFO
+# pacini .SRCINFO validpgpkeys | while read -r key; do
+#   gpg --keyserver "hkps://keys.openpgp.org" --recv-keys "$key"
+# done
+# rm .SRCINFO
 
 # Build packages
 # INPUT_MAKEPKGARGS is intentionally unquoted to allow arg splitting
