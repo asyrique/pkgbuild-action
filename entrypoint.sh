@@ -15,6 +15,7 @@ pacman -Syu --noconfirm --needed base-devel pacutils
 # Create a new user `builder`
 # `builder` needs to have a home directory because some PKGBUILDs will try to
 # write to it (e.g. for cache)
+cat /etc/default/useradd
 useradd builder -m
 # When installing dependencies, makepkg will use sudo
 # Give user `builder` passwordless sudo access
@@ -50,11 +51,11 @@ if [ -n "${INPUT_AURDEPS:-}" ]; then
 fi
 
 # Set GPG to auto retrieve keys
-sudo -H -u builder mkdir -m 0700 ~/.gnupg -p
-sudo -H -u builder touch ~/.gnupg/gpg.conf
-sudo -H -u builder chmod 600 ~/.gnupg/gpg.conf
-echo "keyserver hkps://keys.openpgp.org" | sudo -H -u builder tee ~/.gnupg/gpg.conf
-echo "keyserver-options auto-key-retrieve" | sudo -H -u builder tee -a ~/.gnupg/gpg.conf
+sudo -H -u builder mkdir -m 0700 $HOME/.gnupg -p
+sudo -H -u builder touch $HOME/.gnupg/gpg.conf
+sudo -H -u builder chmod 600 $HOME/.gnupg/gpg.conf
+echo "keyserver hkps://keys.openpgp.org" | sudo -H -u builder tee $HOME/.gnupg/gpg.conf
+echo "keyserver-options auto-key-retrieve" | sudo -H -u builder tee -a $HOME/.gnupg/gpg.conf
 sudo -H -u builder gpg --batch --generate-key <<EOF
 	%echo Generating a default key
 	%no-protection
