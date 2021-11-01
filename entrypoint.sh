@@ -15,8 +15,9 @@ pacman -Syu --noconfirm --needed base-devel pacutils
 # Create a new user `builder`
 # `builder` needs to have a home directory because some PKGBUILDs will try to
 # write to it (e.g. for cache)
-cat /etc/default/useradd
 useradd builder -m
+ls /home
+ls /github
 # When installing dependencies, makepkg will use sudo
 # Give user `builder` passwordless sudo access
 echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
